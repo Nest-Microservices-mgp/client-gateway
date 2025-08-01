@@ -5,6 +5,7 @@ import {
   Inject,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -52,6 +53,18 @@ export class OrdersController {
         ...paginationDto,
         status: statusDto.status,
       });
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Patch(':id')
+  async changeStatus(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() statusDto: StatusDto,
+  ) {
+    try {
+      return this.orderClient.send('changeOrderStatus', { id, ...statusDto });
     } catch (error) {
       throw new RpcException(error);
     }
