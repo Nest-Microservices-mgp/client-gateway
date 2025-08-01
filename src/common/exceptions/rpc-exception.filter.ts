@@ -8,7 +8,7 @@ export class RcpCustomExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
 
     const rcpError = exception.getError();
-    console.error(rcpError);
+    console.error('hola');
 
     if (
       typeof rcpError === 'object' &&
