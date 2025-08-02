@@ -4,6 +4,14 @@
 npm run start:dev
 ```
 
+## Dev
+
+1. Clonar repositorio
+2. Instalar dependencias
+3. Crear `.env` basadao en `.env.template`
+4. Tener levantados los otros microservicios
+5. Levanantar el proyecto con `npm run start:dev`
+
 ## Nats
 
 ```
