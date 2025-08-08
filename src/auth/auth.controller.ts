@@ -1,8 +1,11 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { catchError } from 'rxjs';
 import { NATS_SERVICE } from 'src/config';
+import { Token, User } from './decorators';
 import { LoginUserDto, RegisterUserDto } from './dto';
+import { AuthGuard } from './guards/auth.guard';
+import { CurrentUser } from './interfaces/current-user.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -29,8 +32,11 @@ export class AuthController {
     );
   }
 
+  @UseGuards(AuthGuard)
   @Post('validate')
-  validateToken() {
-    return this.client.send('auth.validate.user', {});
+  validateToken(@User() user: CurrentUser, @Token() token: string) {
+    // console.log(req.headers);
+    // return this.client.send('auth.validate.user', { user });
+    return { user, token };
   }
 }
